@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "../../../../lib/prisma";
+import { pusher } from "../../../../lib/pusher-server";
 
 export async function DELETE(
   req: Request,
@@ -24,6 +25,10 @@ export async function DELETE(
 
     await prisma.timeBlock.delete({
       where: { id },
+    });
+
+    await pusher.trigger("aria-calendar", "delete-block", {
+      id: id.toString(),
     });
 
     return NextResponse.json({ message: "Deleted" });
@@ -59,6 +64,11 @@ export async function PUT(
       data: {
         name: body.title,
       },
+    });
+
+    await pusher.trigger("aria-calendar", "update-block", {
+      id: updated.id,
+      title: updated.name,
     });
 
     return NextResponse.json(updated);
