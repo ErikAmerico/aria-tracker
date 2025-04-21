@@ -1,10 +1,20 @@
-// import Image from "next/image";
-// import styles from "./page.module.css";
+"use client";
+import dynamic from "next/dynamic";
+
+const CalendarView = dynamic(() => import("./components/Calendar"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
-    <div>
-      <h1>hello</h1>
-    </div>
+    <main>
+      <h1
+        className="text-xl font-semibold p-4"
+        style={{ textAlign: "center", borderBottom: "1px solid black" }}
+      >
+        Aria&apos;s Visitors
+      </h1>
+      <CalendarView />
+    </main>
   );
 }
