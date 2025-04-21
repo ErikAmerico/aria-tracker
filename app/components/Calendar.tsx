@@ -45,6 +45,7 @@ export default function CalendarView() {
     message: "",
     severity: "success",
   });
+  const [viewDate, setViewDate] = useState(new Date());
 
   useEffect(() => {
     pusherClient.subscribe("aria-calendar");
@@ -178,6 +179,18 @@ export default function CalendarView() {
     }
   };
 
+  function getSlotMinTime(viewDate: Date): string {
+    const now = new Date();
+    const isToday = now.toDateString() === viewDate.toDateString();
+
+    if (isToday) {
+      const hours = now.getHours().toString().padStart(2, "0");
+      return `${hours}:00:00`; // rounded down to the hour
+    }
+
+    return "00:00:00"; // full day for other dates
+  }
+
   return (
     <>
       <FullCalendar
@@ -192,14 +205,19 @@ export default function CalendarView() {
         select={handleDateSelect}
         events={events}
         allDaySlot={false}
-        slotMinTime="00:00:00"
+        datesSet={({ start }) => {
+          if (start.toDateString() !== viewDate.toDateString()) {
+            setViewDate(start);
+          }
+        }}
+        slotMinTime={getSlotMinTime(viewDate)}
         slotMaxTime="24:00:00"
         slotDuration="01:00:00"
         height="auto"
         slotLabelFormat={{
           hour: "numeric",
           minute: "2-digit",
-          meridiem: "short",
+          meridiem: "narrow",
           hour12: true,
         }}
         headerToolbar={{
