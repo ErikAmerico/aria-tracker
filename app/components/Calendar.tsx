@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import { pusherClient } from "../../lib/pusher-client";
 
 type Event = {
   id: string;
@@ -44,6 +45,41 @@ export default function CalendarView() {
     message: "",
     severity: "success",
   });
+
+  useEffect(() => {
+    pusherClient.subscribe("aria-calendar");
+
+    const handler = (data: Event) => {
+      console.log("new-block event received:", data);
+      setEvents((prev) => {
+        const alreadyExists = prev.some((e) => e.id === data.id);
+        if (alreadyExists) return prev;
+        return [...prev, data];
+      });
+    };
+
+    pusherClient.bind("new-block", handler);
+
+    pusherClient.bind(
+      "update-block",
+      ({ id, title }: { id: string; title: string }) => {
+        setEvents((prev) =>
+          prev.map((event) =>
+            event.id === String(id) ? { ...event, title } : event
+          )
+        );
+      }
+    );
+
+    pusherClient.bind("delete-block", ({ id }: { id: string }) => {
+      setEvents((prev) => prev.filter((event) => event.id !== id));
+    });
+
+    return () => {
+      pusherClient.unbind("new-block", handler);
+      pusherClient.unsubscribe("aria-calendar");
+    };
+  }, []);
 
   const fetchEvents = async () => {
     const res = await fetch("/api/timeblocks");
@@ -86,26 +122,17 @@ export default function CalendarView() {
       const title = formValue.trim() || "Aria's friend";
       const clientId = localStorage.getItem("clientId") || "";
 
-      const newEvent = {
-        id: String(events.length + 1),
-        title,
-        start: selectedRange!.start,
-        end: selectedRange!.end,
-        clientId,
-      };
-
       await fetch("/api/timeblocks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: newEvent.title,
-          start: newEvent.start,
-          end: newEvent.end,
-          clientId: newEvent.clientId,
+          title,
+          start: selectedRange!.start,
+          end: selectedRange!.end,
+          clientId,
         }),
       });
 
-      await fetchEvents();
       setFormValue("");
 
       setSnackbar({
@@ -121,14 +148,6 @@ export default function CalendarView() {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      fetchEvents();
-    }, 5000); // every 5 seconds
-
-    return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
   useEffect(() => {
