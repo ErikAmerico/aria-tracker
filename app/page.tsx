@@ -124,36 +124,45 @@ export default function Home() {
         <DialogTitle>Directions to Aria’s Room</DialogTitle>
         <DialogContent>
           <Typography component="div">
-            <a
-              href="http://maps.apple.com/?q=300+Longwood+Ave,+Boston,+MA"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "#1976d2",
-                textDecoration: "none",
-                fontWeight: 500,
-              }}
-            >
-              Hospital: 300 Longwood Ave, Boston MA
-              <LaunchIcon sx={{ color: "#f48fb1", transform: "scale(0.5)" }} />
-            </a>
-            <br />
-            <a
-              href="http://maps.apple.com/?q=2+Blackfan+St,+Boston,+MA"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "#1976d2",
-                textDecoration: "none",
-                fontWeight: 500,
-              }}
-            >
-              Parking: 2 Blackfan St, Boston MA
-              <LaunchIcon sx={{ color: "#f48fb1", transform: "scale(0.5)" }} />
-            </a>
+            <div style={{ marginLeft: "-5px" }}>
+              <a
+                href="http://maps.apple.com/?q=300+Longwood+Ave,+Boston,+MA"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "#1976d2",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                  display: "inline-flex",
+                }}
+              >
+                <LaunchIcon
+                  sx={{ color: "#f48fb1", transform: "scale(0.75)" }}
+                />
+                Hospital: 300 Longwood Ave, Boston MA
+              </a>
+              <br />
+              <a
+                href="http://maps.apple.com/?q=2+Blackfan+St,+Boston,+MA"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  color: "#1976d2",
+                  textDecoration: "none",
+                  fontWeight: 500,
+                  display: "inline-flex",
+                }}
+              >
+                <LaunchIcon
+                  sx={{ color: "#f48fb1", transform: "scale(0.75)" }}
+                />
+                Parking: 2 Blackfan St, Boston MA
+              </a>
+            </div>
             <ul
               style={{
                 paddingInlineStart: "17.5px",
+                marginTop: "0px",
               }}
             >
               <li>Aria is in room 1045 &middot; Berthiaume Building.</li>
