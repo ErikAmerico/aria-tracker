@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -64,10 +65,26 @@ export default function Home() {
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>
           <Typography component="div">
+            <div>
+              A soft little calendar—not too serious, just here to help keep
+              Aria’s cuddle meter in the green.{" "}
+              <FavoriteIcon
+                sx={{
+                  color: "#f48fb1",
+                  fontSize: "1rem",
+                  verticalAlign: "middle",
+                }}
+              />
+            </div>
+            <hr />
             <span style={{ fontWeight: "bold" }}>Add a time block</span>
             <div style={{ marginLeft: "10px" }}>
-              Tap and hold on an empty line next to a time, then drag to
-              highlight how long you&apos;ll stay.
+              Press and hold an empty line next to a time, then drag to choose
+              your visit time.
+              <div style={{ marginTop: "7.5px" }}>
+                (You don’t need to add your name as a guest—if left blank, it’ll
+                just say ‘Aria’s friend’ on the calendar.)
+              </div>
             </div>
             <br />
             <span style={{ fontWeight: "bold" }}>Edit/Delete time block</span>
@@ -135,33 +152,39 @@ export default function Home() {
               Parking: 2 Blackfan St, Boston MA
               <LaunchIcon sx={{ color: "#f48fb1", transform: "scale(0.5)" }} />
             </a>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - Aria is in room 1045 of the Berthiaume(Bert) Building
-            </div>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - After parking, go to the lobby of the main building at 300
-              longwood.
-            </div>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - At the Main Lobby Information Desk tell them you are here to
-              visit Aria Olson in room 1045 of the Berthiaume Building. (I think
-              you can just say &quot;Bert Building&quot;)
-            </div>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - They will ask your relation to Aria <br />
-              <div style={{ marginLeft: "10px" }}>
-                (If you aren&apos;t a grandparent/great grandparent &middot; I
-                would just tell them you are an aunt or uncle to be safe)
-              </div>
-            </div>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - They will ask for you ID to create a temporary bade that will
-              get you around the hospital
-            </div>
-            <div style={{ marginLeft: "5px", marginTop: "2.5px" }}>
-              - Follow signs for Berthiaume Building or ask for directions to
-              10th floor &middot; room 1045
-            </div>
+            <ul
+              style={{
+                paddingInlineStart: "17.5px",
+              }}
+            >
+              <li>Aria is in room 1045 &middot; Berthiaume Building.</li>
+              <li>
+                After parking, go to the lobby of the Main Building at 300
+                Longwood.
+              </li>
+              <li>
+                At the Main Lobby Information Desk tell them you are here to
+                visit Aria Olson in room 1045 of the Berthiaume Building. <br />
+                <div style={{ marginLeft: "10px" }}>
+                  (I think you can just say &quot;Bert Building&quot;)
+                </div>
+              </li>
+              <li>
+                They will ask your relation to Aria. <br />
+                <div style={{ marginLeft: "10px" }}>
+                  (If you aren&apos;t a grandparent/great grandparent—I would
+                  maybe tell them you are an aunt or uncle to be safe)
+                </div>
+              </li>
+              <li>
+                They will ask for your ID to create a temporary badge that will
+                get you around the hospital.
+              </li>
+              <li>
+                Follow signs for Berthiaume Building or ask for directions to
+                10th floor &middot; room 1045.
+              </li>
+            </ul>
           </Typography>
         </DialogContent>
         <DialogActions>
