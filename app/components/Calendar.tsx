@@ -299,9 +299,9 @@ export default function CalendarView() {
 
           <TextField
             fullWidth
-            label="Guests"
+            label="Guests (optional)"
             variant="outlined"
-            placeholder="(Optional) Who's coming to visit?"
+            placeholder="Who's coming to visit?"
             value={formValue}
             onChange={(e) => setFormValue(e.target.value)}
             sx={{ mt: 2 }}
