@@ -78,15 +78,14 @@ export default function Home() {
             </div>
             <hr />
             <span style={{ fontWeight: "bold" }}>Add a time block</span>
-            <div style={{ marginLeft: "10px" }}>
+            <div style={{ marginLeft: "10px", marginBottom: "10px" }}>
               Press and hold an empty line next to a time, then drag to choose
               your visit time.
-              <div style={{ marginTop: "7.5px" }}>
+              {/* <div style={{ marginTop: "7.5px" }}>
                 (You don’t need to add your name as a guest—if left blank, it’ll
                 just say ‘Aria’s friend’ on the calendar.)
-              </div>
+              </div> */}
             </div>
-            <br />
             <span style={{ fontWeight: "bold" }}>Edit/Delete time block</span>
             <div style={{ marginLeft: "10px" }}>
               Tap a time block you made to update guests or delete it.
