@@ -14,6 +14,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
 import { useSimpleVersionCheck } from "../hooks/useSimpleVersionCheck";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -22,7 +23,7 @@ const CalendarView = dynamic(() => import("./components/Calendar"), {
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDirections, setOpenDirections] = useState(false);
-  useSimpleVersionCheck();
+  const { showUpdateDialog } = useSimpleVersionCheck();
 
   useEffect(() => {
     setOpenDialog(true); // Always open on load
@@ -76,6 +77,44 @@ export default function Home() {
         </Button>
       </h1>
       <CalendarView />
+
+      <Dialog
+        open={showUpdateDialog}
+        onClose={() => {}}
+        hideBackdrop
+        slotProps={{
+          paper: {
+            sx: {
+              width: "90vw",
+              maxWidth: "90vw",
+              height: "50vh",
+              maxHeight: "50vh",
+              margin: 5,
+              borderRadius: 5,
+              backgroundColor: "#fff3f8",
+            },
+          },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <CircularProgress sx={{ color: "#d81b60", mb: 2 }} />
+          <Typography
+            variant="h6"
+            sx={{ color: "#d81b60", fontWeight: "bold", fontSize: "1.25rem" }}
+          >
+            Updating...
+          </Typography>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>
           <Typography component="div">

@@ -1,41 +1,37 @@
 "use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function useSimpleVersionCheck() {
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+
   useEffect(() => {
-    const checkVersion = async () => {
+    const checkForUpdate = async () => {
       try {
-        const res = await fetch("/", {
-          method: "HEAD",
-          cache: "no-store",
-        });
+        const res = await fetch("/", { method: "HEAD", cache: "no-store" });
+        const newETag = res.headers.get("etag");
+        const previousETag = sessionStorage.getItem("etag");
 
-        const serverETag = res.headers.get("etag");
-
-        const clientETag = sessionStorage.getItem("etag");
-
-        if (clientETag && serverETag && clientETag !== serverETag) {
-          // Force a reload to get the new version
-          window.location.reload();
-        } else {
-          sessionStorage.setItem("etag", serverETag ?? "");
+        if (previousETag && newETag && previousETag !== newETag) {
+          setShowUpdateDialog(true);
+          setTimeout(() => window.location.reload(), 2500);
         }
-      } catch (error) {
-        console.error("Version check failed:", error);
+
+        if (newETag) {
+          sessionStorage.setItem("etag", newETag);
+        }
+      } catch (err) {
+        console.error("Version check failed:", err);
       }
     };
 
-    // Check on tab focus or navigation
-    window.addEventListener("focus", checkVersion);
-    window.addEventListener("pageshow", checkVersion);
-
-    // Run once on initial load
-    checkVersion();
+    window.addEventListener("focus", checkForUpdate);
+    window.addEventListener("pageshow", checkForUpdate);
 
     return () => {
-      window.removeEventListener("focus", checkVersion);
-      window.removeEventListener("pageshow", checkVersion);
+      window.removeEventListener("focus", checkForUpdate);
+      window.removeEventListener("pageshow", checkForUpdate);
     };
   }, []);
+
+  return { showUpdateDialog };
 }
