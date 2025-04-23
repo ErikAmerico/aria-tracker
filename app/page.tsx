@@ -11,6 +11,8 @@ import {
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
+import IconButton from "@mui/material/IconButton";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -32,7 +34,17 @@ export default function Home() {
           borderBottom: "1px solid lightgray",
         }}
       >
-        Aria&apos;s Visitors
+        <span style={{ marginLeft: "28px" }}>Aria&apos;s Visitors</span>
+        <IconButton
+          onClick={() => setOpenDialog(true)}
+          size="small"
+          disabled={openDialog}
+          sx={{
+            color: "#f48fb1",
+          }}
+        >
+          <InfoOutlinedIcon fontSize="small" />
+        </IconButton>
         <br />
         <Button
           onClick={() => setOpenDirections(true)}
