@@ -13,8 +13,6 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
-import { useSimpleVersionCheck } from "../hooks/useSimpleVersionCheck";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -23,7 +21,6 @@ const CalendarView = dynamic(() => import("./components/Calendar"), {
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDirections, setOpenDirections] = useState(false);
-  const { showUpdateDialog } = useSimpleVersionCheck();
 
   useEffect(() => {
     const seenDialog = localStorage.getItem("hasSeenInfoDialog");
@@ -80,43 +77,6 @@ export default function Home() {
         </Button>
       </h1>
       <CalendarView />
-
-      <Dialog
-        open={showUpdateDialog}
-        onClose={() => {}}
-        hideBackdrop
-        slotProps={{
-          paper: {
-            sx: {
-              width: "90vw",
-              maxWidth: "90vw",
-              height: "60vh",
-              maxHeight: "60vh",
-              borderRadius: 5,
-              backgroundColor: "#fff3f8",
-              zIndex: 1400,
-            },
-          },
-        }}
-      >
-        <DialogContent
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          <CircularProgress sx={{ color: "#d81b60", mb: 2 }} />
-          <Typography
-            variant="h6"
-            sx={{ color: "#d81b60", fontWeight: "bold", fontSize: "1.25rem" }}
-          >
-            A new version is available. Reloading...
-          </Typography>
-        </DialogContent>
-      </Dialog>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>
