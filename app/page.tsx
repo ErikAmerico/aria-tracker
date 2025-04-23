@@ -26,7 +26,10 @@ export default function Home() {
   const { showUpdateDialog } = useSimpleVersionCheck();
 
   useEffect(() => {
-    setOpenDialog(true); // Always open on load
+    const seenDialog = localStorage.getItem("hasSeenInfoDialog");
+    if (!seenDialog) {
+      setOpenDialog(true);
+    }
   }, []);
   return (
     <main>
@@ -149,7 +152,10 @@ export default function Home() {
         </DialogContent>
         <DialogActions>
           <Button
-            onClick={() => setOpenDialog(false)}
+            onClick={() => {
+              localStorage.setItem("hasSeenInfoDialog", "true");
+              setOpenDialog(false);
+            }}
             color="primary"
             variant="contained"
           >
