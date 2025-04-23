@@ -24,6 +24,11 @@ export function useSimpleVersionCheck() {
       }
     };
 
+    if (!sessionStorage.getItem("etag")) {
+      sessionStorage.setItem("etag", "blahblahblah");
+      checkForUpdate();
+    }
+
     window.addEventListener("focus", checkForUpdate);
     window.addEventListener("pageshow", checkForUpdate);
 

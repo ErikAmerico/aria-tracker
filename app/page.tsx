@@ -110,7 +110,7 @@ export default function Home() {
             variant="h6"
             sx={{ color: "#d81b60", fontWeight: "bold", fontSize: "1.25rem" }}
           >
-            Updating...
+            A new version is available. Reloading...
           </Typography>
         </DialogContent>
       </Dialog>
