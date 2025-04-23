@@ -13,6 +13,7 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
+import { useSimpleVersionCheck } from "../hooks/useSimpleVersionCheck";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -21,6 +22,7 @@ const CalendarView = dynamic(() => import("./components/Calendar"), {
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDirections, setOpenDirections] = useState(false);
+  useSimpleVersionCheck();
 
   useEffect(() => {
     setOpenDialog(true); // Always open on load
