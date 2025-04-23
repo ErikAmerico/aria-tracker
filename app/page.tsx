@@ -87,11 +87,11 @@ export default function Home() {
             sx: {
               width: "90vw",
               maxWidth: "90vw",
-              height: "50vh",
-              maxHeight: "50vh",
-              margin: 5,
+              height: "60vh",
+              maxHeight: "60vh",
               borderRadius: 5,
               backgroundColor: "#fff3f8",
+              zIndex: 1400,
             },
           },
         }}
