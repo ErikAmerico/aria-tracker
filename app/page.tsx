@@ -7,12 +7,14 @@ import {
   DialogTitle,
   Button,
   Typography,
+  CircularProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
+import { useVersionChecker } from "./versionChecker";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -21,6 +23,9 @@ const CalendarView = dynamic(() => import("./components/Calendar"), {
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDirections, setOpenDirections] = useState(false);
+
+  const version = "1.0.0";
+  const { shouldReload } = useVersionChecker(version);
 
   useEffect(() => {
     const seenDialog = localStorage.getItem("hasSeenInfoDialog");
@@ -219,6 +224,48 @@ export default function Home() {
             Close
           </Button>
         </DialogActions>
+      </Dialog>
+      <Dialog
+        open={shouldReload}
+        onClose={() => {}}
+        hideBackdrop
+        slotProps={{
+          paper: {
+            sx: {
+              width: "90vw",
+              maxWidth: "90vw",
+              height: "90vh",
+              maxHeight: "50vh",
+              margin: 5,
+              borderRadius: 5,
+              backgroundColor: "#fff3f8",
+              boxShadow: `
+          0 0 20px white,
+          0 0 40px white,
+          0 0 60px white
+        `,
+              border: "2px solid #f06292",
+            },
+          },
+        }}
+      >
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <CircularProgress sx={{ color: "#d81b60", mb: 2 }} />
+          <Typography
+            variant="h6"
+            sx={{ color: "#d81b60", fontWeight: "bold", fontSize: "1.25rem" }}
+          >
+            Updating...
+          </Typography>
+        </DialogContent>
       </Dialog>
     </main>
   );
