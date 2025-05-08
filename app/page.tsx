@@ -7,7 +7,7 @@ import {
   DialogTitle,
   Button,
   Typography,
-  CircularProgress,
+  // CircularProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -26,8 +26,9 @@ export default function Home() {
   const [openDirections, setOpenDirections] = useState(false);
   const [wentHomeDialog, setWentHomeDialog] = useState(false);
 
-  const version = "1.0.0";
-  const { shouldReload } = useVersionChecker(version);
+  const version = "2.0.0";
+  // const { shouldReload } = useVersionChecker(version);
+  useVersionChecker(version);
 
   useEffect(() => {
     //// In the static version of the site, we do not need new users to see info Dialog.
@@ -301,7 +302,7 @@ export default function Home() {
           </Button>
         </DialogActions>
       </Dialog>
-      <Dialog
+      {/* <Dialog
         open={shouldReload}
         onClose={() => {}}
         hideBackdrop
@@ -342,7 +343,7 @@ export default function Home() {
             Updating...
           </Typography>
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </main>
   );
 }

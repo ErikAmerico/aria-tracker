@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export function useVersionChecker(version: string) {
-  const [shouldReload, setShouldReload] = useState(false);
+  // const [shouldReload, setShouldReload] = useState(false);
 
   useEffect(() => {
     const checkVersion = () => {
@@ -19,11 +20,13 @@ export function useVersionChecker(version: string) {
           "No version found. but has seen dialog - likely existing user, just hasn't seen the version update. Setting version and refreshing..."
         );
         localStorage.setItem("versionNumber", version);
-        setShouldReload(true);
+        // setShouldReload(true);
+        window.location.reload();
       } else if (storedVersion !== version) {
         console.log("Version mismatch detected. Updating...");
         localStorage.setItem("versionNumber", version);
-        setShouldReload(true);
+        // setShouldReload(true);
+        window.location.reload();
       }
     };
 
@@ -34,13 +37,13 @@ export function useVersionChecker(version: string) {
     return () => clearInterval(interval);
   }, [version]);
 
-  useEffect(() => {
-    if (shouldReload) {
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
-    }
-  }, [shouldReload]);
+  // useEffect(() => {
+  //   if (shouldReload) {
+  //     setTimeout(() => {
+  //       window.location.reload();
+  //     }, 3000);
+  //   }
+  // }, [shouldReload]);
 
-  return { shouldReload };
+  // return { shouldReload };
 }
