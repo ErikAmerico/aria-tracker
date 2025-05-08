@@ -122,8 +122,9 @@ export default function Home() {
               maxWidth: "80vw",
               margin: 0,
               borderRadius: 3,
-              height: "40vh",
-              maxHeight: "40vh",
+              height: "300px",
+              maxHeight: "300px",
+              minHeight: "300px",
             },
           },
         }}
