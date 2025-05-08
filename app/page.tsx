@@ -15,6 +15,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
 import { useVersionChecker } from "./versionChecker";
+import Pride from "react-canvas-confetti/dist/presets/pride";
 
 const CalendarView = dynamic(() => import("./components/Calendar"), {
   ssr: false,
@@ -23,6 +24,7 @@ const CalendarView = dynamic(() => import("./components/Calendar"), {
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDirections, setOpenDirections] = useState(false);
+  const [wentHomeDialog, setWentHomeDialog] = useState(false);
 
   const version = "1.0.0";
   const { shouldReload } = useVersionChecker(version);
@@ -38,9 +40,29 @@ export default function Home() {
     //(just as if the dialog did open)
     //This is to allow the versionChecker to function correclty
     localStorage.setItem("hasSeenInfoDialog", "true");
+    setWentHomeDialog(true);
   }, []);
   return (
     <main>
+      <div
+        style={{
+          position: "fixed",
+          pointerEvents: "none",
+          width: "100vw",
+          height: "100vh",
+          top: 0,
+          left: 0,
+          zIndex: 9999,
+        }}
+      >
+        <Pride
+          autorun={{ speed: 30 }}
+          decorateOptions={(options) => ({
+            ...options,
+            colors: ["#4D88D4", "#ffffff", "#f48fb1"],
+          })}
+        />
+      </div>
       <h1
         className="text-xl font-semibold p-4"
         style={{
@@ -88,6 +110,54 @@ export default function Home() {
         </Button>
       </h1>
       <CalendarView />
+
+      <Dialog
+        open={wentHomeDialog}
+        onClose={() => setWentHomeDialog(false)}
+        slotProps={{
+          paper: {
+            sx: {
+              width: "80vw",
+              maxWidth: "80vw",
+              margin: 0,
+              borderRadius: 3,
+              height: "40vh",
+              maxHeight: "40vh",
+            },
+          },
+        }}
+      >
+        <DialogContent>
+          <Typography component="div">
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: "100px",
+              }}
+            >
+              Aria went home
+              <FavoriteIcon
+                sx={{
+                  color: "#f48fb1",
+                  fontSize: "1rem",
+                  verticalAlign: "middle",
+                }}
+              />
+            </div>
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setWentHomeDialog(false);
+            }}
+            color="primary"
+            variant="contained"
+          >
+            WooHoo!!
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <DialogContent>
