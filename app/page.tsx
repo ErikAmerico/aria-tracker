@@ -28,10 +28,16 @@ export default function Home() {
   const { shouldReload } = useVersionChecker(version);
 
   useEffect(() => {
-    const seenDialog = localStorage.getItem("hasSeenInfoDialog");
-    if (!seenDialog) {
-      setOpenDialog(true);
-    }
+    //// In the static version of the site, we do not need new users to see info Dialog.
+    // const seenDialog = localStorage.getItem("hasSeenInfoDialog");
+    // if (!seenDialog) {
+    //   setOpenDialog(true);
+    // }
+
+    //We do still need to set hasSeenInfoDialog to true when a user visits the page though -
+    //(just as if the dialog did open)
+    //This is to allow the versionChecker to function correclty
+    localStorage.setItem("hasSeenInfoDialog", "true");
   }, []);
   return (
     <main>
