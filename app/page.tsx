@@ -32,10 +32,7 @@ export default function Home() {
     //   setOpenDialog(true);
     // }
 
-    //We do still need to set hasSeenInfoDialog to true when a user visits the page though -
-    //(just as if the dialog did open)
-    //This is to allow the versionChecker to function correclty
-    localStorage.setItem("hasSeenInfoDialog", "true");
+    // localStorage.setItem("hasSeenInfoDialog", "true");
     setWentHomeDialog(true);
   }, []);
   return (
