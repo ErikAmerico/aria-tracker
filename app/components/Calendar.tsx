@@ -1,5 +1,7 @@
 "use client";
 
+//split this up into smaller components.
+
 import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
