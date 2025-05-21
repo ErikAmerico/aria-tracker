@@ -1,5 +1,4 @@
 "use client";
-import dynamic from "next/dynamic";
 import {
   Dialog,
   DialogContent,
@@ -8,7 +7,6 @@ import {
   Button,
   Typography,
   Box,
-  // CircularProgress,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
@@ -16,17 +14,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
 import Pride from "react-canvas-confetti/dist/presets/pride";
-
-const StaticCalendarView = dynamic(
-  () => import("./components/StaticCalendar"),
-  {
-    ssr: false,
-  }
-);
-
-const CalendarView = dynamic(() => import("./components/legacy/Calendar"), {
-  ssr: false,
-});
+import CalendarView from "./components/legacy/Calendar";
+import StaticCalendarView from "./components/StaticCalendar";
 
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
