@@ -11,15 +11,14 @@ import {
 import { useEffect, useState } from "react";
 import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
-import IconButton from "@mui/material/IconButton";
 import CalendarView from "./components/Calendar";
 import StaticCalendarView from "./components/StaticCalendar";
 import Confetti from "./components/Confetti";
+import Header from "./components/header/Header";
 
 export default function Home() {
-  const [openDialog, setOpenDialog] = useState(false);
-  const [openDirections, setOpenDirections] = useState(false);
+  const [howToDialog, setHowToDialog] = useState(false);
+  const [openDirectionsDialog, setOpenDirectionsDialog] = useState(false);
   const [wentHomeDialog, setWentHomeDialog] = useState(false);
   const [staticVersion, setStaticVersion] = useState(true);
 
@@ -34,7 +33,7 @@ export default function Home() {
     if (!staticVersion) {
       const seenDialog = localStorage.getItem("hasSeenInfoDialog");
       if (!seenDialog) {
-        setOpenDialog(true);
+        setHowToDialog(true);
       }
       localStorage.setItem("hasSeenInfoDialog", "true");
     } else {
@@ -43,53 +42,12 @@ export default function Home() {
   }, [staticVersion]);
   return (
     <main>
-      {staticVersion && <Confetti />}
-      <h1
-        className="text-xl font-semibold p-4"
-        style={{
-          textAlign: "center",
-          borderBottom: "1px solid lightgray",
-        }}
-      >
-        <span style={{ marginLeft: "28px" }}>Aria&apos;s Visitors</span>
-        <IconButton
-          onClick={() => setOpenDialog(true)}
-          size="small"
-          disabled={openDialog}
-          sx={{
-            color: "#f48fb1",
-          }}
-        >
-          <InfoOutlinedIcon fontSize="small" />
-        </IconButton>
-        <br />
-        <Button
-          onClick={() => setOpenDirections(true)}
-          variant="text"
-          size="small"
-          disabled={openDirections}
-          sx={{
-            mt: 1,
-            borderRadius: "10px",
-            textTransform: "none",
-            fontWeight: "bold",
-            fontSize: "0.875rem",
-            padding: "4px 12px",
-            borderColor: "#1976d2",
-            backgroundColor: "#f48fb1",
-            color: "#fce4ec",
-            "&:hover": {
-              backgroundColor: "#fce4ec",
-              borderColor: "#f06292",
-              color: "#ad1457",
-            },
-            marginBottom: "5px",
-            marginTop: "-5px",
-          }}
-        >
-          Directions
-        </Button>
-      </h1>
+      <Header
+        howToDialog={howToDialog}
+        setHowToDialog={setHowToDialog}
+        openDirectionsDialog={openDirectionsDialog}
+        setOpenDirectionsDialog={setOpenDirectionsDialog}
+      />
 
       {staticVersion && <StaticCalendarView />}
       {!staticVersion && <CalendarView />}
@@ -145,7 +103,7 @@ export default function Home() {
         </Dialog>
       )}
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+      <Dialog open={howToDialog} onClose={() => setHowToDialog(false)}>
         <DialogContent>
           <Typography component="div">
             <div>
@@ -201,7 +159,7 @@ export default function Home() {
             {!staticVersion && (
               <Button
                 onClick={() => {
-                  setOpenDialog(false);
+                  setHowToDialog(false);
                   setStaticVersion(true);
                   localStorage.setItem("staticVersion", "true");
                 }}
@@ -215,7 +173,7 @@ export default function Home() {
             <Button
               onClick={() => {
                 localStorage.setItem("hasSeenInfoDialog", "true");
-                setOpenDialog(false);
+                setHowToDialog(false);
               }}
               color="primary"
               variant="contained"
@@ -227,8 +185,8 @@ export default function Home() {
       </Dialog>
 
       <Dialog
-        open={openDirections}
-        onClose={() => setOpenDirections(false)}
+        open={openDirectionsDialog}
+        onClose={() => setOpenDirectionsDialog(false)}
         slotProps={{
           paper: {
             sx: {
@@ -317,11 +275,16 @@ export default function Home() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenDirections(false)} variant="contained">
+          <Button
+            onClick={() => setOpenDirectionsDialog(false)}
+            variant="contained"
+          >
             Close
           </Button>
         </DialogActions>
       </Dialog>
+
+      {staticVersion && <Confetti />}
     </main>
   );
 }
