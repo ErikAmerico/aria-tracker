@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { pusherClient } from "../../../lib/pusher-client";
+import { pusherClient } from "../../lib/pusher-client";
 
 type Event = {
   id: string;
