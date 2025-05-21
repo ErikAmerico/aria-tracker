@@ -13,9 +13,9 @@ import LaunchIcon from "@mui/icons-material/Launch";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import IconButton from "@mui/material/IconButton";
-import Pride from "react-canvas-confetti/dist/presets/pride";
-import CalendarView from "./components/legacy/Calendar";
+import CalendarView from "./components/Calendar";
 import StaticCalendarView from "./components/StaticCalendar";
+import Confetti from "./components/Confetti";
 
 export default function Home() {
   const [openDialog, setOpenDialog] = useState(false);
@@ -43,27 +43,7 @@ export default function Home() {
   }, [staticVersion]);
   return (
     <main>
-      {staticVersion && (
-        <div
-          style={{
-            position: "fixed",
-            pointerEvents: "none",
-            width: "100vw",
-            height: "100vh",
-            top: 0,
-            left: 0,
-            zIndex: 9999,
-          }}
-        >
-          <Pride
-            autorun={{ speed: 30 }}
-            decorateOptions={(options) => ({
-              ...options,
-              colors: ["#4D88D4", "#ffffff", "#f48fb1"],
-            })}
-          />
-        </div>
-      )}
+      {staticVersion && <Confetti />}
       <h1
         className="text-xl font-semibold p-4"
         style={{
