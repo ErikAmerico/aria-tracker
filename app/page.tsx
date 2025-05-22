@@ -15,6 +15,7 @@ import CalendarView from "./components/Calendar";
 import StaticCalendarView from "./components/StaticCalendar";
 import Confetti from "./components/Confetti";
 import Header from "./components/header/Header";
+import WentHomeDialogComponent from "./components/WentHomeDialog";
 
 export default function Home() {
   const [howToDialog, setHowToDialog] = useState(false);
@@ -40,6 +41,7 @@ export default function Home() {
       setWentHomeDialog(true);
     }
   }, [staticVersion]);
+
   return (
     <main>
       <Header
@@ -53,54 +55,10 @@ export default function Home() {
       {!staticVersion && <CalendarView />}
 
       {staticVersion && (
-        <Dialog
-          open={wentHomeDialog}
-          onClose={() => setWentHomeDialog(false)}
-          slotProps={{
-            paper: {
-              sx: {
-                width: "80vw",
-                maxWidth: "80vw",
-                margin: 0,
-                borderRadius: 3,
-                height: "300px",
-                maxHeight: "300px",
-                minHeight: "300px",
-              },
-            },
-          }}
-        >
-          <DialogContent>
-            <Typography component="div">
-              <div
-                style={{
-                  textAlign: "center",
-                  marginTop: "100px",
-                }}
-              >
-                Aria went home
-                <FavoriteIcon
-                  sx={{
-                    color: "#f48fb1",
-                    fontSize: "1rem",
-                    verticalAlign: "middle",
-                  }}
-                />
-              </div>
-            </Typography>
-          </DialogContent>
-          <DialogActions>
-            <Button
-              onClick={() => {
-                setWentHomeDialog(false);
-              }}
-              color="primary"
-              variant="contained"
-            >
-              WooHoo!!
-            </Button>
-          </DialogActions>
-        </Dialog>
+        <WentHomeDialogComponent
+          wentHomeDialog={wentHomeDialog}
+          setWentHomeDialog={setWentHomeDialog}
+        />
       )}
 
       <Dialog open={howToDialog} onClose={() => setHowToDialog(false)}>
