@@ -88,7 +88,6 @@ export default function HowToDialogComponent({
 
           <Button
             onClick={() => {
-              localStorage.setItem("hasSeenInfoDialog", "true");
               setHowToDialog(false);
             }}
             color="primary"
