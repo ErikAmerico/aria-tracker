@@ -12,7 +12,10 @@ export default function Home() {
   const [howToDialog, setHowToDialog] = useState(false);
   const [openDirectionsDialog, setOpenDirectionsDialog] = useState(false);
   const [wentHomeDialog, setWentHomeDialog] = useState(false);
-  const [staticVersion, setStaticVersion] = useState(true);
+  //if we wanted to permenantly switch to the live calendar version
+  //make staticVersion false and comment out the 'celebration' and 'live calendar' buttons
+  //in components/HowToDialog.tsx
+  const [staticVersion, setStaticVersion] = useState(false);
 
   useEffect(() => {
     const storedVersion = localStorage.getItem("staticVersion");
@@ -26,8 +29,8 @@ export default function Home() {
       const seenDialog = localStorage.getItem("hasSeenInfoDialog");
       if (!seenDialog) {
         setHowToDialog(true);
+        localStorage.setItem("hasSeenInfoDialog", "true");
       }
-      localStorage.setItem("hasSeenInfoDialog", "true");
     } else {
       setWentHomeDialog(true);
     }
@@ -42,15 +45,18 @@ export default function Home() {
         setOpenDirectionsDialog={setOpenDirectionsDialog}
       />
 
-      {staticVersion && <StaticCalendarView />}
-      {!staticVersion && <CalendarView />}
-
       {staticVersion && (
-        <WentHomeDialogComponent
-          wentHomeDialog={wentHomeDialog}
-          setWentHomeDialog={setWentHomeDialog}
-        />
+        <>
+          <StaticCalendarView />
+          <WentHomeDialogComponent
+            wentHomeDialog={wentHomeDialog}
+            setWentHomeDialog={setWentHomeDialog}
+          />
+          <Confetti />
+        </>
       )}
+
+      {!staticVersion && <CalendarView />}
 
       <HowToDialogComponent
         howToDialog={howToDialog}
@@ -63,8 +69,6 @@ export default function Home() {
         openDirectionsDialog={openDirectionsDialog}
         setOpenDirectionsDialog={setOpenDirectionsDialog}
       />
-
-      {staticVersion && <Confetti />}
     </main>
   );
 }
