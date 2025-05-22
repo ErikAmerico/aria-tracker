@@ -1,0 +1,12 @@
+.h1-container {
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.title {
+  margin-left: 28px;
+}
+
+.icon {
+  color: #f48fb1;
+}
