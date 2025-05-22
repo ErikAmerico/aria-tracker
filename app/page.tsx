@@ -15,7 +15,7 @@ export default function Home() {
   //if we wanted to permenantly switch to the live calendar version
   //make staticVersion false and comment out the 'celebration' and 'live calendar' buttons
   //in components/HowToDialog.tsx
-  const [staticVersion, setStaticVersion] = useState(false);
+  const [staticVersion, setStaticVersion] = useState(true);
 
   useEffect(() => {
     const storedVersion = localStorage.getItem("staticVersion");
