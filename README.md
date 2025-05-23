@@ -2,9 +2,9 @@
   <img src="./assets/banner.png" alt="Visitation Scheduler banner" width="100%" />
 </p>
 
-<p style="width: 175px">
+<p>
   <a href="https://visitaria.dad">
-    <img src="./assets/liveSite.png" alt="Visit Live Site" />
+    <img src="https://img.shields.io/badge/🌐 Visit%20Live%20Site-0088ff?style=for-the-badge&logo=internet-explorer&logoColor=white" alt="Visit Live Site" />
   </a>
 </p>
 
@@ -52,19 +52,11 @@ No login required — it's designed to be fast, friendly, and mobile-ready.
         <br/>
         <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
         <br />
-        <p style="width: 90px; margin-bottom: -22px">
-          <a href="https://visitaria.dad">
-            <img src="./assets/pusher.png" alt="Visit Live Site" />
-          </a>
-        </p>
+        <img src="https://img.shields.io/badge/PUSHER-4A148C?style=for-the-badge&logo=pusher&logoColor=white" alt="Pusher Badge" />
         <br />
         <img src="https://img.shields.io/badge/Vercel-333333?style=for-the-badge&logo=vercel&logoColor=white" />
         <br />
-        <p style="width: 80px">
-          <a href="https://visitaria.dad">
-            <img src="./assets/neon.png" alt="Visit Live Site" />
-          </a>
-        </p>
+       <img src="./assets/neon.png" height="26" alt="Neon Logo" />
     </td>
     </tr>
 </table>
@@ -73,48 +65,48 @@ No login required — it's designed to be fast, friendly, and mobile-ready.
 
 ### 🕹️ Using the App
 
-<table style="width: 100%; border: none; border-collapse: collapse;">
+<table>
   <tr>
-    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
       When you first visit the page, you'll be in Celebration Mode. <br /> <br />
      You can explore previous dates to see who visited Aria. <br /> <br />
       Click the <img src="./assets/infoIcon.png" alt="Info" width="20" /> icon next to "Aria's Visitors" to open the Info Dialog.
     </td>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
       <img src="./assets/initialOpening.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
   <tr>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
       <img src="./assets/liveCalendarBtn.png" alt="Initial Opening" height="500" />
     </td>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
      Click the "Live Calendar" button to switch to Live Calendar Mode and explore the full functionality of the app.
     </td>
   </tr>
   <tr>
-    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
      To create a time block, press and hold on a time slot, then drag to your desired start or end time. <br /><br />
       A pop-up will appear, allowing you to enter guest names. If left blank, the entry will default to "Aria's friend".
     </td>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
       <img src="./assets/createTimeBlock.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
   <tr>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
       <img src="./assets/filledOutCal.png" alt="Initial Opening" height="500" />
     </td>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
    Here's an example of the calendar with a few time blocks filled in.
     </td>
   </tr>
   <tr>
-    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
+    <td align="center">
      While in Live Calendar Mode, you can return to Celebration Mode at any time by clicking the "Celebration" button in the Info Dialog.
     </td>
-    <td style="border: none; text-align: center; padding: 16px;" align="center">
-  <img src="./assets/celebrationBtn.png" alt="Initial Opening"   height="500" />
+    <td align="center">
+      <img src="./assets/celebrationBtn.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
 </table>
