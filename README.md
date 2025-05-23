@@ -1,32 +1,12 @@
-<div align="center" style="
-  background-color:#f48fb1;
-  color: white;
-  padding: 40px 20px;
-  font-size: 40px;
-  font-weight: 900;
-  font-family: sans-serif;
-  border-radius: 12px;
-  margin-bottom: 20px;
-">
-  Visitation Scheduler
-</div>
+<p align="center">
+  <img src="./assets/banner.png" alt="Visitation Scheduler banner" width="100%" />
+</p>
 
-<div>
-  <a href="https://visitaria.dad" target="_blank" style="
-    display: inline-block;
-    background-color:rgb(0, 130, 236);
-    color: black;
-    font-weight: bold;
-    font-family: sans-serif;
-    font-size: 16px;
-    padding: 12px 24px;
-    text-decoration: none;
-    border-radius: 6px;
-    box-shadow: 0 0px 10px 5px rgba(255, 255, 255, 0.2);
-  ">
-    🌐 Visit Live Site
+<p style="width: 175px">
+  <a href="https://visitaria.dad">
+    <img src="./assets/liveSite.png" alt="Visit Live Site" />
   </a>
-</div>
+</p>
 
 <br />
 
@@ -72,41 +52,19 @@ No login required — it's designed to be fast, friendly, and mobile-ready.
         <br/>
         <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
         <br />
-        <span style="
-            display: inline-flex;
-            align-items: center;
-            background-color: white;
-            color:  #4A148C;;
-            font-weight: bold;
-            font-family: sans-serif;
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 0;
-            text-transform: uppercase;
-            margin-bottom: 6px
-            ">
-            <img src="https://avatars.githubusercontent.com/u/739550?s=280&v=4" alt="Pusher Logo" height="20" style="margin-left: -5px"/>
-            PUSHER
-        </span>
+        <p style="width: 90px; margin-bottom: -22px">
+          <a href="https://visitaria.dad">
+            <img src="./assets/pusher.png" alt="Visit Live Site" />
+          </a>
+        </p>
         <br />
         <img src="https://img.shields.io/badge/Vercel-333333?style=for-the-badge&logo=vercel&logoColor=white" />
         <br />
-        <span style="
-            display: inline-flex;
-            align-items: center;
-            background-color: #00EC8B;
-            color: black;
-            font-weight: bold;
-            font-family: sans-serif;
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 0;
-            box-shadow: none;
-            text-transform: uppercase;
-            ">
-            <img src="https://neon.tech/favicon/favicon.png" alt="Neon Logo" height="20" style="margin-right: 6px; margin-left: -5px" />
-            NEON
-        </span>
+        <p style="width: 80px">
+          <a href="https://visitaria.dad">
+            <img src="./assets/neon.png" alt="Visit Live Site" />
+          </a>
+        </p>
     </td>
     </tr>
 </table>
@@ -115,47 +73,47 @@ No login required — it's designed to be fast, friendly, and mobile-ready.
 
 ### 🕹️ Using the App
 
-<table style="width: 100%; border-collapse:collapse">
+<table style="width: 100%; border: none; border-collapse: collapse;">
   <tr>
-    <td style="width: 50%;" align="center">
+    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
       When you first visit the page, you'll be in Celebration Mode. <br /> <br />
      You can explore previous dates to see who visited Aria. <br /> <br />
       Click the <img src="./assets/infoIcon.png" alt="Info" width="20" /> icon next to "Aria's Visitors" to open the Info Dialog.
     </td>
-    <td align="center">
-  <img src="./assets/initialOpening.png" alt="Initial Opening"   height="500" />
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
+      <img src="./assets/initialOpening.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
   <tr>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
       <img src="./assets/liveCalendarBtn.png" alt="Initial Opening" height="500" />
     </td>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
      Click the "Live Calendar" button to switch to Live Calendar Mode and explore the full functionality of the app.
     </td>
   </tr>
   <tr>
-    <td style="width: 50%" align="center">
+    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
      To create a time block, press and hold on a time slot, then drag to your desired start or end time. <br /><br />
       A pop-up will appear, allowing you to enter guest names. If left blank, the entry will default to "Aria's friend".
     </td>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
       <img src="./assets/createTimeBlock.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
   <tr>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
       <img src="./assets/filledOutCal.png" alt="Initial Opening" height="500" />
     </td>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
    Here's an example of the calendar with a few time blocks filled in.
     </td>
   </tr>
   <tr>
-    <td style="width: 50%" align="center">
+    <td style="width: 50%; border: none; text-align: center; padding: 16px;" align="center">
      While in Live Calendar Mode, you can return to Celebration Mode at any time by clicking the "Celebration" button in the Info Dialog.
     </td>
-    <td align="center">
+    <td style="border: none; text-align: center; padding: 16px;" align="center">
   <img src="./assets/celebrationBtn.png" alt="Initial Opening"   height="500" />
     </td>
   </tr>
