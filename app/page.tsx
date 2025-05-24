@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import CalendarView from "./components/Calendar";
+import CalendarView from "./components/calendar/Calendar";
 import StaticCalendarView from "./components/StaticCalendar";
 import Confetti from "./components/Confetti";
 import Header from "./components/header/Header";

@@ -6,20 +6,16 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import type { DateSelectArg } from "@fullcalendar/core";
 import { EventClickArg } from "@fullcalendar/core";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
-  Button,
-  Typography,
-} from "@mui/material";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { pusherClient } from "../../lib/pusher-client";
+import { pusherClient } from "../../../lib/pusher-client";
+import TimeBlock from "./components/TimeBlockDialog";
+import EditTimeBlock from "./components/EditTimeBlockDialog";
 
-type Event = {
+//renamed from event -> CalendarEvent
+//**Avoid naming anything Event, FormData, Error, or Window. These are all global types in the DOM and will clash with your stuff eventually. **/
+//This is used in this file and in EditTimeblockDialog - it should be moved to a types/interfaces file and exported. keep it DRY.
+type CalendarEvent = {
   id: string;
   title: string;
   start: string;
@@ -27,7 +23,8 @@ type Event = {
 };
 
 export default function CalendarView() {
-  const [events, setEvents] = useState<Event[]>([]);
+  //use CalendarEvent here as the type instead of Event.
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRange, setSelectedRange] = useState<{
@@ -51,7 +48,8 @@ export default function CalendarView() {
   useEffect(() => {
     pusherClient.subscribe("aria-calendar");
 
-    const handler = (data: Event) => {
+    //handler now expects CalendarEvent instead of Event.
+    const handler = (data: CalendarEvent) => {
       console.log("new-block event received:", data);
       setEvents((prev) => {
         const alreadyExists = prev.some((e) => e.id === data.id);
@@ -117,35 +115,6 @@ export default function CalendarView() {
     setIsModalOpen(false);
     setFormValue("");
     setSelectedRange(null);
-  };
-
-  const handleOk = async () => {
-    try {
-      const title = formValue.trim() || "Aria's friend";
-      const clientId = localStorage.getItem("clientId") || "";
-
-      await fetch("/api/timeblocks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          start: selectedRange!.start,
-          end: selectedRange!.end,
-          clientId,
-        }),
-      });
-
-      setFormValue("");
-
-      setSnackbar({
-        open: true,
-        message: "Time block added!",
-        severity: "success",
-      });
-      handleCancel();
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   useEffect(() => {
@@ -267,138 +236,24 @@ export default function CalendarView() {
         eventClick={handleEventClick}
       />
 
-      <Dialog open={isModalOpen} onClose={handleCancel} fullWidth maxWidth="sm">
-        <DialogTitle>Create Time Block</DialogTitle>
-        <DialogContent dividers>
-          {selectedRange && (
-            <div style={{ marginBottom: 16 }}>
-              <Typography variant="body2">
-                <strong>Date:</strong>{" "}
-                {new Date(selectedRange.start).toLocaleDateString("en-US", {
-                  weekday: "short",
-                  year: "numeric",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </Typography>
-              <Typography variant="body2">
-                <strong>Time:</strong>{" "}
-                {new Date(selectedRange.start).toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}{" "}
-                –{" "}
-                {new Date(selectedRange.end).toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
-              </Typography>
-            </div>
-          )}
+      <TimeBlock
+        isModalOpen={isModalOpen}
+        handleCancel={handleCancel}
+        selectedRange={selectedRange}
+        formValue={formValue}
+        setFormValue={setFormValue}
+        setSnackbar={setSnackbar}
+      />
 
-          <TextField
-            fullWidth
-            label="Guests (optional)"
-            variant="outlined"
-            placeholder="Who's coming to visit?"
-            value={formValue}
-            onChange={(e) => setFormValue(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-        </DialogContent>
+      <EditTimeBlock
+        clickedEvent={clickedEvent}
+        setClickedEvent={setClickedEvent}
+        editValue={editValue}
+        setEditValue={setEditValue}
+        setEvents={setEvents}
+        setSnackbar={setSnackbar}
+      />
 
-        <DialogActions>
-          <Button onClick={handleCancel}>Cancel</Button>
-          <Button onClick={handleOk} variant="contained" color="primary">
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <Dialog
-        open={!!clickedEvent}
-        onClose={() => setClickedEvent(null)}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle>Edit Time Block</DialogTitle>
-        <DialogContent dividers>
-          <TextField
-            fullWidth
-            label="Guests"
-            variant="outlined"
-            value={editValue}
-            onChange={(e) => setEditValue(e.target.value)}
-            sx={{ mt: 2 }}
-          />
-        </DialogContent>
-
-        <DialogActions>
-          <Button
-            onClick={async () => {
-              const clientId = localStorage.getItem("clientId");
-
-              if (
-                clickedEvent?.event.extendedProps.clientId &&
-                clickedEvent.event.extendedProps.clientId === clientId
-              ) {
-                await fetch(`/api/timeblocks/${clickedEvent.event.id}`, {
-                  method: "DELETE",
-                });
-
-                setEvents((prev) =>
-                  prev.filter((event) => event.id !== clickedEvent.event.id)
-                );
-
-                setClickedEvent(null);
-                setSnackbar({
-                  open: true,
-                  message: "Time block deleted!",
-                  severity: "success",
-                });
-              }
-            }}
-            color="error"
-          >
-            Delete
-          </Button>
-          <Button onClick={() => setClickedEvent(null)}>Cancel</Button>
-          <Button
-            onClick={async () => {
-              const updatedTitle = editValue.trim() || "Aria's friend";
-
-              await fetch(`/api/timeblocks/${clickedEvent!.event.id}`, {
-                method: "PUT",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ title: updatedTitle }),
-              });
-
-              setEvents((prev) =>
-                prev.map((e) =>
-                  e.id === clickedEvent!.event.id
-                    ? { ...e, title: updatedTitle }
-                    : e
-                )
-              );
-
-              setClickedEvent(null);
-              setSnackbar({
-                open: true,
-                message: "Guests adjusted!",
-                severity: "success",
-              });
-            }}
-            variant="contained"
-            color="primary"
-          >
-            Save
-          </Button>
-        </DialogActions>
-      </Dialog>
       <Snackbar
         open={snackbar.open}
         autoHideDuration={2000}
