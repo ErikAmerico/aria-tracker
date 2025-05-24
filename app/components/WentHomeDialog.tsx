@@ -6,17 +6,12 @@ import {
   Typography,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Dispatch, SetStateAction } from "react";
-
-interface WHDCProps {
-  wentHomeDialog: boolean;
-  setWentHomeDialog: Dispatch<SetStateAction<boolean>>;
-}
+import { WHDCPropsType } from "@/types";
 
 export default function wentHomeDialogComponent({
   wentHomeDialog,
   setWentHomeDialog,
-}: WHDCProps) {
+}: WHDCPropsType) {
   return (
     <Dialog
       open={wentHomeDialog}

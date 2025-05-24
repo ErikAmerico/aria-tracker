@@ -7,21 +7,14 @@ import {
   Box,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Dispatch, SetStateAction } from "react";
-
-interface HTDCProps {
-  howToDialog: boolean;
-  setHowToDialog: Dispatch<SetStateAction<boolean>>;
-  staticVersion: boolean;
-  setStaticVersion: Dispatch<SetStateAction<boolean>>;
-}
+import { HTDCPropsType } from "@/types";
 
 export default function HowToDialogComponent({
   howToDialog,
   setHowToDialog,
   staticVersion,
   setStaticVersion,
-}: HTDCProps) {
+}: HTDCPropsType) {
   return (
     <Dialog open={howToDialog} onClose={() => setHowToDialog(false)}>
       <DialogContent>

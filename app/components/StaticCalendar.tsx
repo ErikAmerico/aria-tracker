@@ -4,13 +4,7 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import jsonData from "../data/aria_data.json";
-
-type Event = {
-  id: string;
-  title: string;
-  start: Date;
-  end: Date;
-};
+import { StaticCalendarEventType } from "@/types";
 
 //formatting static stata for read only version
 const staticData = jsonData.map((block) => ({
@@ -21,7 +15,7 @@ const staticData = jsonData.map((block) => ({
 }));
 
 export default function StaticCalendarView() {
-  const [events, setEvents] = useState<Event[]>([]);
+  const [events, setEvents] = useState<StaticCalendarEventType[]>([]);
 
   useEffect(() => {
     setEvents(staticData);
