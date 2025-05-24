@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { ETBPropsType } from "@/types";
 
-export default function EditTimeBlock({
+export default function EditTimeBlockDialog({
   clickedEvent,
   setClickedEvent,
   editValue,
