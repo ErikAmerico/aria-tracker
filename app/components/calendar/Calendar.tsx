@@ -8,37 +8,26 @@ import type { DateSelectArg } from "@fullcalendar/core";
 import { EventClickArg } from "@fullcalendar/core";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { pusherClient } from "../../../lib/pusher-client";
+import { pusherClient } from "@/lib/pusher-client";
 import TimeBlock from "./components/TimeBlockDialog";
 import EditTimeBlock from "./components/EditTimeBlockDialog";
-
-//renamed from event -> CalendarEvent
-//**Avoid naming anything Event, FormData, Error, or Window. These are all global types in the DOM and will clash with your stuff eventually. **/
-//This is used in this file and in EditTimeblockDialog - it should be moved to a types/interfaces file and exported. keep it DRY.
-type CalendarEvent = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-};
+import {
+  CalendarEventType,
+  SnackbarType,
+  SelectedRangeType,
+  TimeBlockType,
+} from "@/types";
 
 export default function CalendarView() {
-  //use CalendarEvent here as the type instead of Event.
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
-
+  const [events, setEvents] = useState<CalendarEventType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedRange, setSelectedRange] = useState<{
-    start: string;
-    end: string;
-  } | null>(null);
+  const [selectedRange, setSelectedRange] = useState<SelectedRangeType | null>(
+    null
+  );
   const [clickedEvent, setClickedEvent] = useState<EventClickArg | null>(null);
   const [formValue, setFormValue] = useState("");
   const [editValue, setEditValue] = useState("");
-  const [snackbar, setSnackbar] = useState<{
-    open: boolean;
-    message: string;
-    severity: "success" | "error" | "info" | "warning";
-  }>({
+  const [snackbar, setSnackbar] = useState<SnackbarType>({
     open: false,
     message: "",
     severity: "success",
@@ -48,8 +37,7 @@ export default function CalendarView() {
   useEffect(() => {
     pusherClient.subscribe("aria-calendar");
 
-    //handler now expects CalendarEvent instead of Event.
-    const handler = (data: CalendarEvent) => {
+    const handler = (data: CalendarEventType) => {
       console.log("new-block event received:", data);
       setEvents((prev) => {
         const alreadyExists = prev.some((e) => e.id === data.id);
@@ -85,15 +73,7 @@ export default function CalendarView() {
     const res = await fetch("/api/timeblocks");
     const data = await res.json();
 
-    type TimeBlock = {
-      id: number;
-      name: string;
-      startTime: string;
-      endTime: string;
-      clientId: string;
-    };
-
-    const mapped = data.map((block: TimeBlock) => ({
+    const mapped = data.map((block: TimeBlockType) => ({
       id: String(block.id),
       title: block.name,
       start: block.startTime,

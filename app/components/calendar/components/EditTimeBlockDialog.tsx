@@ -6,31 +6,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
-import { EventClickArg } from "@fullcalendar/core";
-
-//used elsewhere as well - Should be moved to a types/interfaces file. keep it DRY
-type CalendarEvent = {
-  id: string;
-  title: string;
-  start: string;
-  end: string;
-};
-
-interface ETBProps {
-  clickedEvent: EventClickArg | null;
-  setClickedEvent: Dispatch<SetStateAction<EventClickArg | null>>;
-  editValue: string;
-  setEditValue: Dispatch<SetStateAction<string>>;
-  setEvents: Dispatch<SetStateAction<CalendarEvent[]>>;
-  setSnackbar: Dispatch<
-    SetStateAction<{
-      open: boolean;
-      message: string;
-      severity: "success" | "error" | "info" | "warning";
-    }>
-  >;
-}
+import { ETBPropsType } from "@/types";
 
 export default function EditTimeBlock({
   clickedEvent,
@@ -39,7 +15,7 @@ export default function EditTimeBlock({
   setEditValue,
   setEvents,
   setSnackbar,
-}: ETBProps) {
+}: ETBPropsType) {
   return (
     <Dialog
       open={!!clickedEvent}

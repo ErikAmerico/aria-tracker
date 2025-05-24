@@ -7,22 +7,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { Dispatch, SetStateAction } from "react";
-
-interface TBProps {
-  isModalOpen: boolean;
-  handleCancel: () => void;
-  selectedRange: { start: string; end: string } | null;
-  formValue: string;
-  setFormValue: Dispatch<SetStateAction<string>>;
-  setSnackbar: Dispatch<
-    SetStateAction<{
-      open: boolean;
-      message: string;
-      severity: "success" | "error" | "info" | "warning";
-    }>
-  >;
-}
+import { TBPropsType } from "@/types";
 
 export default function TimeBlock({
   isModalOpen,
@@ -31,7 +16,7 @@ export default function TimeBlock({
   formValue,
   setFormValue,
   setSnackbar,
-}: TBProps) {
+}: TBPropsType) {
   //handle ok or just the fetch should be moved elsewhere
   const handleOk = async () => {
     try {

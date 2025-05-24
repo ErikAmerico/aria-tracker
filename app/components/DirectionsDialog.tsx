@@ -7,17 +7,12 @@ import {
   Typography,
 } from "@mui/material";
 import LaunchIcon from "@mui/icons-material/Launch";
-import { Dispatch, SetStateAction } from "react";
-
-interface DDCProps {
-  openDirectionsDialog: boolean;
-  setOpenDirectionsDialog: Dispatch<SetStateAction<boolean>>;
-}
+import { DDCPropsType } from "@/types";
 
 export default function DirectionDialogComponent({
   openDirectionsDialog,
   setOpenDirectionsDialog,
-}: DDCProps) {
+}: DDCPropsType) {
   return (
     <Dialog
       open={openDirectionsDialog}
