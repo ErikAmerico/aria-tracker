@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { TBPropsType } from "@/types";
+import { addTimeBlock } from "@/services/timeblocks";
 
 export default function TimeBlockDialog({
   isModalOpen,
@@ -17,22 +18,17 @@ export default function TimeBlockDialog({
   setFormValue,
   setSnackbar,
 }: TBPropsType) {
-  //handle ok or just the fetch should be moved elsewhere
   const handleOk = async () => {
     try {
       const title = formValue.trim() || "Aria's friend";
       const clientId = localStorage.getItem("clientId") || "";
 
-      await fetch("/api/timeblocks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          start: selectedRange!.start,
-          end: selectedRange!.end,
-          clientId,
-        }),
-      });
+      await addTimeBlock(
+        title,
+        selectedRange!.start,
+        selectedRange!.end,
+        clientId
+      );
 
       setFormValue("");
 
