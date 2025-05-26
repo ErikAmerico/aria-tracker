@@ -10,16 +10,12 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import TimeBlockDialog from "./components/TimeBlockDialog";
 import EditTimeBlockDialog from "./components/EditTimeBlockDialog";
-import {
-  CalendarEventType,
-  SnackbarType,
-  SelectedRangeType,
-  TimeBlockType,
-} from "@/types";
+import { CalendarEventType, SnackbarType, SelectedRangeType } from "@/types";
 import { getLocalDateString, getSlotMinTime } from "@/utils/dateAndTime";
 import RenderTimeBlock from "./components/TimeBlockRenderer";
 import { usePusherCalendar } from "@/hooks/usePusherCalendar";
 import { getOrCreateClientId } from "@/utils/clientId";
+import { getTimeBlocks } from "@/services/timeblocks";
 
 export default function CalendarView() {
   const [events, setEvents] = useState<CalendarEventType[]>([]);
@@ -37,24 +33,12 @@ export default function CalendarView() {
   });
   const [viewDate, setViewDate] = useState(new Date());
 
+  useEffect(() => {
+    getTimeBlocks().then(setEvents);
+    getOrCreateClientId();
+  }, []);
+
   usePusherCalendar({ setEvents });
-
-  const fetchEvents = async () => {
-    const res = await fetch("/api/timeblocks");
-    const data = await res.json();
-
-    const mapped = data.map((block: TimeBlockType) => ({
-      id: String(block.id),
-      title: block.name,
-      start: block.startTime,
-      end: block.endTime,
-      extendedProps: {
-        clientId: block.clientId,
-      },
-    }));
-
-    setEvents(mapped);
-  };
 
   const handleDateSelect = (info: DateSelectArg) => {
     setSelectedRange({ start: info.startStr, end: info.endStr });
@@ -66,11 +50,6 @@ export default function CalendarView() {
     setFormValue("");
     setSelectedRange(null);
   };
-
-  useEffect(() => {
-    fetchEvents();
-    getOrCreateClientId();
-  }, []);
 
   const handleEventClick = async (clickInfo: EventClickArg) => {
     const clientId = getOrCreateClientId();
