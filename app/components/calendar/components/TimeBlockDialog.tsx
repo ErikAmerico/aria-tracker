@@ -18,7 +18,7 @@ export default function TimeBlockDialog({
   setFormValue,
   setSnackbar,
 }: TBPropsType) {
-  const handleOk = async () => {
+  const addTBlock = async () => {
     try {
       const title = formValue.trim() || "Aria's friend";
       const clientId = localStorage.getItem("clientId") || "";
@@ -88,7 +88,7 @@ export default function TimeBlockDialog({
 
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleOk} variant="contained" color="primary">
+        <Button onClick={addTBlock} variant="contained" color="primary">
           Save
         </Button>
       </DialogActions>
