@@ -8,7 +8,6 @@ import type { DateSelectArg } from "@fullcalendar/core";
 import { EventClickArg } from "@fullcalendar/core";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { pusherClient } from "@/lib/pusher-client";
 import TimeBlockDialog from "./components/TimeBlockDialog";
 import EditTimeBlockDialog from "./components/EditTimeBlockDialog";
 import {
@@ -19,6 +18,7 @@ import {
 } from "@/types";
 import { getLocalDateString, getSlotMinTime } from "@/utils/dateAndTime";
 import RenderTimeBlock from "./components/TimeBlockRenderer";
+import { usePusherCalendar } from "@/hooks/usePusherCalendar";
 
 export default function CalendarView() {
   const [events, setEvents] = useState<CalendarEventType[]>([]);
@@ -36,40 +36,7 @@ export default function CalendarView() {
   });
   const [viewDate, setViewDate] = useState(new Date());
 
-  useEffect(() => {
-    pusherClient.subscribe("aria-calendar");
-
-    const handler = (data: CalendarEventType) => {
-      console.log("new-block event received:", data);
-      setEvents((prev) => {
-        const alreadyExists = prev.some((e) => e.id === data.id);
-        if (alreadyExists) return prev;
-        return [...prev, data];
-      });
-    };
-
-    pusherClient.bind("new-block", handler);
-
-    pusherClient.bind(
-      "update-block",
-      ({ id, title }: { id: string; title: string }) => {
-        setEvents((prev) =>
-          prev.map((event) =>
-            event.id === String(id) ? { ...event, title } : event
-          )
-        );
-      }
-    );
-
-    pusherClient.bind("delete-block", ({ id }: { id: string }) => {
-      setEvents((prev) => prev.filter((event) => event.id !== id));
-    });
-
-    return () => {
-      pusherClient.unbind("new-block", handler);
-      pusherClient.unsubscribe("aria-calendar");
-    };
-  }, []);
+  usePusherCalendar({ setEvents });
 
   const fetchEvents = async () => {
     const res = await fetch("/api/timeblocks");
