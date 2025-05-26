@@ -8,9 +8,8 @@ import type { DateSelectArg } from "@fullcalendar/core";
 import { EventClickArg } from "@fullcalendar/core";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { pusherClient } from "@/lib/pusher-client";
-import TimeBlock from "./components/TimeBlockDialog";
-import EditTimeBlock from "./components/EditTimeBlockDialog";
+import TimeBlockDialog from "./components/TimeBlockDialog";
+import EditTimeBlockDialog from "./components/EditTimeBlockDialog";
 import {
   CalendarEventType,
   SnackbarType,
@@ -18,6 +17,9 @@ import {
   TimeBlockType,
 } from "@/types";
 import { getLocalDateString, getSlotMinTime } from "@/utils/dateAndTime";
+import RenderTimeBlock from "./components/TimeBlockRenderer";
+import { usePusherCalendar } from "@/hooks/usePusherCalendar";
+import { getOrCreateClientId } from "@/utils/clientId";
 
 export default function CalendarView() {
   const [events, setEvents] = useState<CalendarEventType[]>([]);
@@ -35,40 +37,7 @@ export default function CalendarView() {
   });
   const [viewDate, setViewDate] = useState(new Date());
 
-  useEffect(() => {
-    pusherClient.subscribe("aria-calendar");
-
-    const handler = (data: CalendarEventType) => {
-      console.log("new-block event received:", data);
-      setEvents((prev) => {
-        const alreadyExists = prev.some((e) => e.id === data.id);
-        if (alreadyExists) return prev;
-        return [...prev, data];
-      });
-    };
-
-    pusherClient.bind("new-block", handler);
-
-    pusherClient.bind(
-      "update-block",
-      ({ id, title }: { id: string; title: string }) => {
-        setEvents((prev) =>
-          prev.map((event) =>
-            event.id === String(id) ? { ...event, title } : event
-          )
-        );
-      }
-    );
-
-    pusherClient.bind("delete-block", ({ id }: { id: string }) => {
-      setEvents((prev) => prev.filter((event) => event.id !== id));
-    });
-
-    return () => {
-      pusherClient.unbind("new-block", handler);
-      pusherClient.unsubscribe("aria-calendar");
-    };
-  }, []);
+  usePusherCalendar({ setEvents });
 
   const fetchEvents = async () => {
     const res = await fetch("/api/timeblocks");
@@ -100,19 +69,11 @@ export default function CalendarView() {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
-
-  useEffect(() => {
-    let clientId = localStorage.getItem("clientId");
-    if (!clientId) {
-      clientId =
-        self.crypto?.randomUUID?.() ?? Math.random().toString(36).substring(2);
-      localStorage.setItem("clientId", clientId);
-    }
+    getOrCreateClientId();
   }, []);
 
   const handleEventClick = async (clickInfo: EventClickArg) => {
-    const clientId = localStorage.getItem("clientId");
+    const clientId = getOrCreateClientId();
     if (clickInfo.event.extendedProps.clientId === clientId) {
       setClickedEvent(clickInfo);
       setEditValue(clickInfo.event.title);
@@ -153,48 +114,14 @@ export default function CalendarView() {
           center: "title",
           end: "next",
         }}
-        eventContent={(arg) => {
-          const start = new Date(arg.event.startStr);
-          const end = new Date(arg.event.endStr);
-          const durationInMs = end.getTime() - start.getTime();
-          const durationInHours = durationInMs / (1000 * 60 * 60);
-
-          const isShort = durationInHours <= 1;
-
-          return (
-            <div
-              style={{
-                fontSize: isShort ? "0.7rem" : "0.9rem",
-                padding: "2px 4px",
-                whiteSpace: "normal",
-                lineHeight: "1.2",
-              }}
-            >
-              <div>
-                {start.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
-                {" - "}
-                {end.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
-                {" - "}
-                {arg.event.title}
-              </div>
-            </div>
-          );
-        }}
+        eventContent={(arg) => <RenderTimeBlock {...arg} />}
         initialDate={getLocalDateString()}
         validRange={{ start: getLocalDateString() }}
         eventOverlap={false}
         eventClick={handleEventClick}
       />
 
-      <TimeBlock
+      <TimeBlockDialog
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         selectedRange={selectedRange}
@@ -203,7 +130,7 @@ export default function CalendarView() {
         setSnackbar={setSnackbar}
       />
 
-      <EditTimeBlock
+      <EditTimeBlockDialog
         clickedEvent={clickedEvent}
         setClickedEvent={setClickedEvent}
         editValue={editValue}

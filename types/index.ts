@@ -90,3 +90,8 @@ export interface TBPropsType {
     }>
   >;
 }
+
+//usePusherCalendar.tsx
+export interface UPCPropsType {
+  setEvents: Dispatch<SetStateAction<CalendarEventType[]>>;
+}

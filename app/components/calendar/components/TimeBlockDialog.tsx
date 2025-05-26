@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { TBPropsType } from "@/types";
 
-export default function TimeBlock({
+export default function TimeBlockDialog({
   isModalOpen,
   handleCancel,
   selectedRange,
