@@ -19,6 +19,7 @@ import {
 import { getLocalDateString, getSlotMinTime } from "@/utils/dateAndTime";
 import RenderTimeBlock from "./components/TimeBlockRenderer";
 import { usePusherCalendar } from "@/hooks/usePusherCalendar";
+import { getOrCreateClientId } from "@/utils/clientId";
 
 export default function CalendarView() {
   const [events, setEvents] = useState<CalendarEventType[]>([]);
@@ -68,19 +69,11 @@ export default function CalendarView() {
 
   useEffect(() => {
     fetchEvents();
-  }, []);
-
-  useEffect(() => {
-    let clientId = localStorage.getItem("clientId");
-    if (!clientId) {
-      clientId =
-        self.crypto?.randomUUID?.() ?? Math.random().toString(36).substring(2);
-      localStorage.setItem("clientId", clientId);
-    }
+    getOrCreateClientId();
   }, []);
 
   const handleEventClick = async (clickInfo: EventClickArg) => {
-    const clientId = localStorage.getItem("clientId");
+    const clientId = getOrCreateClientId();
     if (clickInfo.event.extendedProps.clientId === clientId) {
       setClickedEvent(clickInfo);
       setEditValue(clickInfo.event.title);
