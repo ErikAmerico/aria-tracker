@@ -17,6 +17,9 @@ export default function Home() {
   //in components/HowToDialog.tsx
   const [staticVersion, setStaticVersion] = useState(true);
 
+  //get or clientId from localstorage here? then pass to other components?
+  //redux?
+
   useEffect(() => {
     const storedVersion = localStorage.getItem("staticVersion");
     if (storedVersion && storedVersion === "false") {
