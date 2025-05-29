@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
-import jsonData from "../data/aria_data.json";
+import jsonData from "@/app/data/aria_data.json";
 import { StaticCalendarEventType } from "@/types";
 
 //formatting static stata for read only version
