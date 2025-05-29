@@ -7,6 +7,8 @@ import Header from "./components/header/Header";
 import WentHomeDialogComponent from "./components/WentHomeDialog";
 import HowToDialogComponent from "./components/HowToDialog";
 import DirectionDialogComponent from "./components/DirectionsDialog";
+import { getOrCreateClientId } from "@/utils/clientId";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export default function Home() {
   const [howToDialog, setHowToDialog] = useState(false);
@@ -16,9 +18,7 @@ export default function Home() {
   //make staticVersion false and comment out the 'celebration' and 'live calendar' buttons
   //in components/HowToDialog.tsx
   const [staticVersion, setStaticVersion] = useState(true);
-
-  //get or clientId from localstorage here? then pass to other components?
-  //redux?
+  const [clientId, setClientId] = useState<string>();
 
   useEffect(() => {
     const storedVersion = localStorage.getItem("staticVersion");
@@ -30,6 +30,7 @@ export default function Home() {
   useEffect(() => {
     if (!staticVersion) {
       const seenDialog = localStorage.getItem("hasSeenInfoDialog");
+      setClientId(getOrCreateClientId());
       if (!seenDialog) {
         setHowToDialog(true);
         localStorage.setItem("hasSeenInfoDialog", "true");
@@ -59,7 +60,15 @@ export default function Home() {
         </>
       )}
 
-      {!staticVersion && <CalendarView />}
+      {!staticVersion &&
+        (clientId ? (
+          <CalendarView clientId={clientId} />
+        ) : (
+          <div style={{ textAlign: "center", marginTop: "2rem" }}>
+            <CircularProgress />
+            <p>Looking for your ID number...</p>
+          </div>
+        ))}
 
       <HowToDialogComponent
         howToDialog={howToDialog}
