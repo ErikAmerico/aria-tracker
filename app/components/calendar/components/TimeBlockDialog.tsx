@@ -7,21 +7,21 @@ import {
   Button,
   Typography,
 } from "@mui/material";
-import { TBPropsType } from "@/types";
+import { TBDCPropsType } from "@/types";
 import { addTimeBlock } from "@/services/timeblocks";
 
 export default function TimeBlockDialog({
+  clientId,
   isModalOpen,
   handleCancel,
   selectedRange,
   formValue,
   setFormValue,
   setSnackbar,
-}: TBPropsType) {
+}: TBDCPropsType) {
   const addTBlock = async () => {
     try {
       const title = formValue.trim() || "Aria's friend";
-      const clientId = localStorage.getItem("clientId") || "";
 
       await addTimeBlock(
         title,
