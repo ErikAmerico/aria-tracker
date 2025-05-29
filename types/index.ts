@@ -31,8 +31,14 @@ export interface TimeBlockType {
   clientId: string;
 }
 
+//Calendar.tsx
+export interface clientIdType {
+  clientId: string;
+}
+
 //EditTimeBlockDialog.tsx
-export interface ETBPropsType {
+export interface ETBCPropsType {
+  clientId: string;
   clickedEvent: EventClickArg | null;
   setClickedEvent: Dispatch<SetStateAction<EventClickArg | null>>;
   editValue: string;
@@ -76,7 +82,8 @@ export interface DDCPropsType {
 }
 
 //timbeBlockDialog.tsx
-export interface TBPropsType {
+export interface TBDCPropsType {
+  clientId: string;
   isModalOpen: boolean;
   handleCancel: () => void;
   selectedRange: { start: string; end: string } | null;
