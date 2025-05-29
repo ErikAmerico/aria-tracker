@@ -9,7 +9,7 @@ export default function FadeInWrapper({
     <Box
       sx={{
         opacity: 0,
-        animation: "fadeIn 0.5s ease forwards",
+        animation: "fadeIn 2s ease forwards",
         "@keyframes fadeIn": {
           to: { opacity: 1 },
         },
