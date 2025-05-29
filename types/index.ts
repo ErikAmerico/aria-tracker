@@ -36,6 +36,17 @@ export interface clientIdType {
   clientId: string;
 }
 
+//RenderCalendarOrStaticCalendar.tsx
+export interface RCOSCPropsType {
+  clientId: string | undefined;
+  showSpinner: boolean;
+  readyToRenderCalendar: boolean;
+  isDOMReady: boolean;
+  staticVersion: boolean;
+  wentHomeDialog: boolean;
+  setWentHomeDialog: Dispatch<SetStateAction<boolean>>;
+}
+
 //EditTimeBlockDialog.tsx
 export interface ETBCPropsType {
   clientId: string;
