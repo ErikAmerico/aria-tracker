@@ -8,7 +8,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { WHDCPropsType } from "@/types";
 
-export default function wentHomeDialogComponent({
+export default function WentHomeDialogComponent({
   wentHomeDialog,
   setWentHomeDialog,
 }: WHDCPropsType) {
