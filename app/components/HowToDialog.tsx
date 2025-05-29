@@ -55,6 +55,7 @@ export default function HowToDialogComponent({
           {staticVersion && (
             <Button
               onClick={() => {
+                setHowToDialog(false);
                 setStaticVersion(false);
                 localStorage.setItem("staticVersion", "false");
               }}

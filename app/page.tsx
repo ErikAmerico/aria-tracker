@@ -88,9 +88,9 @@ export default function Home() {
                 wentHomeDialog={wentHomeDialog}
                 setWentHomeDialog={setWentHomeDialog}
               />
-              <Confetti />
             </FadeInWrapper>
           )}
+          <Confetti />
         </>
       )}
 
