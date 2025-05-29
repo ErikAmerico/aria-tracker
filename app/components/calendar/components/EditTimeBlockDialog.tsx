@@ -6,20 +6,19 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { ETBPropsType } from "@/types";
+import { ETBCPropsType } from "@/types";
 import { updateTimeBlock, deleteTimeBlock } from "@/services/timeblocks";
 
 export default function EditTimeBlockDialog({
+  clientId,
   clickedEvent,
   setClickedEvent,
   editValue,
   setEditValue,
   setEvents,
   setSnackbar,
-}: ETBPropsType) {
+}: ETBCPropsType) {
   const deleteTBlock = async () => {
-    const clientId = localStorage.getItem("clientId");
-
     if (
       clickedEvent?.event.extendedProps.clientId &&
       clickedEvent.event.extendedProps.clientId === clientId

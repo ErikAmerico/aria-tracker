@@ -10,14 +10,18 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import TimeBlockDialog from "./components/TimeBlockDialog";
 import EditTimeBlockDialog from "./components/EditTimeBlockDialog";
-import { CalendarEventType, SnackbarType, SelectedRangeType } from "@/types";
+import {
+  CalendarEventType,
+  SnackbarType,
+  SelectedRangeType,
+  clientIdType,
+} from "@/types";
 import { getLocalDateString, getSlotMinTime } from "@/utils/dateAndTime";
 import RenderTimeBlock from "./components/TimeBlockRenderer";
 import { usePusherCalendar } from "@/hooks/usePusherCalendar";
-import { getOrCreateClientId } from "@/utils/clientId";
 import { getTimeBlocks } from "@/services/timeblocks";
 
-export default function CalendarView() {
+export default function CalendarView({ clientId }: clientIdType) {
   const [events, setEvents] = useState<CalendarEventType[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedRange, setSelectedRange] = useState<SelectedRangeType | null>(
@@ -35,7 +39,6 @@ export default function CalendarView() {
 
   useEffect(() => {
     getTimeBlocks().then(setEvents);
-    getOrCreateClientId();
   }, []);
 
   usePusherCalendar({ setEvents });
@@ -52,7 +55,6 @@ export default function CalendarView() {
   };
 
   const handleEventClick = async (clickInfo: EventClickArg) => {
-    const clientId = getOrCreateClientId();
     if (clickInfo.event.extendedProps.clientId === clientId) {
       setClickedEvent(clickInfo);
       setEditValue(clickInfo.event.title);
@@ -101,6 +103,7 @@ export default function CalendarView() {
       />
 
       <TimeBlockDialog
+        clientId={clientId}
         isModalOpen={isModalOpen}
         handleCancel={handleCancel}
         selectedRange={selectedRange}
@@ -110,6 +113,7 @@ export default function CalendarView() {
       />
 
       <EditTimeBlockDialog
+        clientId={clientId}
         clickedEvent={clickedEvent}
         setClickedEvent={setClickedEvent}
         editValue={editValue}
