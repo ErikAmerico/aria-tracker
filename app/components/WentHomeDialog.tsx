@@ -22,7 +22,7 @@ export default function WentHomeDialogComponent({
         paper: {
           sx: {
             width: "80vw",
-            maxWidth: "80vw",
+            maxWidth: "600px",
             margin: 0,
             borderRadius: 3,
             height: "300px",
