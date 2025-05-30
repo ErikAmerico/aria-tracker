@@ -43,6 +43,7 @@ export interface RCOSCPropsType {
   readyToRenderCalendar: boolean;
   isDOMReady: boolean;
   staticVersion: boolean;
+  setStaticVersion: Dispatch<SetStateAction<boolean>>;
   wentHomeDialog: boolean;
   setWentHomeDialog: Dispatch<SetStateAction<boolean>>;
 }
@@ -68,6 +69,7 @@ export interface ETBCPropsType {
 export interface WHDCPropsType {
   wentHomeDialog: boolean;
   setWentHomeDialog: Dispatch<SetStateAction<boolean>>;
+  setStaticVersion: Dispatch<SetStateAction<boolean>>;
 }
 
 //StaticCalendar.tsx

@@ -12,6 +12,7 @@ export default function CalendarOrStaticCalendar({
   readyToRenderCalendar,
   isDOMReady,
   staticVersion,
+  setStaticVersion,
   wentHomeDialog,
   setWentHomeDialog,
 }: RCOSCPropsType) {
@@ -25,6 +26,7 @@ export default function CalendarOrStaticCalendar({
               <WentHomeDialogComponent
                 wentHomeDialog={wentHomeDialog}
                 setWentHomeDialog={setWentHomeDialog}
+                setStaticVersion={setStaticVersion}
               />
             </FadeInWrapper>
           )}
