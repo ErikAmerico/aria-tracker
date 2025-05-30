@@ -21,9 +21,9 @@ export default function DirectionDialogComponent({
         paper: {
           sx: {
             width: "100vw",
-            maxWidth: "100vw",
+            maxWidth: "700px",
+            borderRadius: 3,
             margin: 0,
-            borderRadius: 0,
             height: "80vh",
             maxHeight: "80vh",
           },
