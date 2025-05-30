@@ -25,4 +25,36 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
-/* trigger refresh */
+.main-container {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 100;
+}
+
+body {
+  position: relative;
+  background: white;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: calc((100vw - 800px) / 2);
+  background: linear-gradient(to right, #ffdceb, white);
+  z-index: 0;
+  left: 0;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: calc((100vw - 800px) / 2);
+  background: linear-gradient(to left, #b3e1ff, white);
+  z-index: 0;
+  right: 0;
+}
