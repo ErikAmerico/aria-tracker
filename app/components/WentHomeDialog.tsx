@@ -4,6 +4,7 @@ import {
   DialogActions,
   Button,
   Typography,
+  Box,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { WHDCPropsType } from "@/types";
@@ -11,6 +12,7 @@ import { WHDCPropsType } from "@/types";
 export default function WentHomeDialogComponent({
   wentHomeDialog,
   setWentHomeDialog,
+  setStaticVersion,
 }: WHDCPropsType) {
   return (
     <Dialog
@@ -50,15 +52,35 @@ export default function WentHomeDialogComponent({
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button
-          onClick={() => {
-            setWentHomeDialog(false);
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "100%",
           }}
-          color="primary"
-          variant="contained"
         >
-          WooHoo!!
-        </Button>
+          <Button
+            onClick={() => {
+              setWentHomeDialog(false);
+              setStaticVersion(false);
+              localStorage.setItem("staticVersion", "false");
+            }}
+            color="success"
+            variant="contained"
+          >
+            Live Calendar
+          </Button>
+
+          <Button
+            onClick={() => {
+              setWentHomeDialog(false);
+            }}
+            color="primary"
+            variant="contained"
+          >
+            WooHoo!!
+          </Button>
+        </Box>
       </DialogActions>
     </Dialog>
   );

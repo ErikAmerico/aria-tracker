@@ -48,6 +48,7 @@ export default function Home() {
         readyToRenderCalendar={readyToRenderCalendar}
         isDOMReady={isDOMReady}
         staticVersion={staticVersion}
+        setStaticVersion={setStaticVersion}
         wentHomeDialog={wentHomeDialog}
         setWentHomeDialog={setWentHomeDialog}
       />
