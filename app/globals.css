@@ -75,7 +75,24 @@ body::after {
   top: 0;
   bottom: 0;
   width: calc((100vw - 800px) / 2);
-  background: linear-gradient(to left, #b3e1ff, white);
+  background: linear-gradient(to left, #aedfff, white);
   z-index: 0;
   right: 0;
+}
+
+.fc-next-button.fc-button.fc-button-primary:focus,
+.fc-prev-button.fc-button.fc-button-primary:focus,
+.fc-next-button.fc-button.fc-button-primary:active,
+.fc-prev-button.fc-button.fc-button-primary:active,
+.fc-next-button.fc-button.fc-button-primary:active:focus,
+.fc-prev-button.fc-button.fc-button-primary:active:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.fc-next-button.fc-button.fc-button-primary:active {
+  color: #0099ff;
+}
+.fc-prev-button.fc-button.fc-button-primary:active {
+  color: #ff65a8;
 }
