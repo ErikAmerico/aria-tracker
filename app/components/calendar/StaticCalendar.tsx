@@ -5,6 +5,7 @@ import FullCalendar from "@fullcalendar/react";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import jsonData from "@/app/data/aria_data.json";
 import { StaticCalendarEventType } from "@/types";
+import RenderTimeBlock from "./components/TimeBlockRenderer";
 
 //formatting static stata for read only version
 const staticData = jsonData.map((block) => ({
@@ -44,41 +45,7 @@ export default function StaticCalendarView() {
           center: "title",
           end: "next",
         }}
-        eventContent={(arg) => {
-          const start = new Date(arg.event.startStr);
-          const end = new Date(arg.event.endStr);
-          const durationInMs = end.getTime() - start.getTime();
-          const durationInHours = durationInMs / (1000 * 60 * 60);
-
-          const isShort = durationInHours <= 1;
-
-          return (
-            <div
-              style={{
-                fontSize: isShort ? "0.7rem" : "0.9rem",
-                padding: "2px 4px",
-                whiteSpace: "normal",
-                lineHeight: "1.2",
-              }}
-            >
-              <div>
-                {start.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
-                {" - "}
-                {end.toLocaleTimeString("en-US", {
-                  hour: "numeric",
-                  minute: "2-digit",
-                  hour12: true,
-                })}
-                {" - "}
-                {arg.event.title}
-              </div>
-            </div>
-          );
-        }}
+        eventContent={(arg) => <RenderTimeBlock {...arg} />}
         validRange={{
           start: "2025-04-21",
           end: "2025-05-08",
