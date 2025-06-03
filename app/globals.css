@@ -64,7 +64,7 @@ body::before {
   top: 0;
   bottom: 0;
   width: calc((100vw - 800px) / 2);
-  background: linear-gradient(to right, #ffdceb, white);
+  background: linear-gradient(to right, #ffebf3, white);
   z-index: 0;
   left: 0;
 }
@@ -75,7 +75,7 @@ body::after {
   top: 0;
   bottom: 0;
   width: calc((100vw - 800px) / 2);
-  background: linear-gradient(to left, #aedfff, white);
+  background: linear-gradient(to left, #c9e9ff, white);
   z-index: 0;
   right: 0;
 }
